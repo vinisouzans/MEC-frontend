@@ -1,0 +1,173 @@
+<!-- src/app/components/usuario-form/usuario-form.component.html -->
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card shadow">
+        <div class="card-header bg-white">
+          <h4 class="mb-0">
+            <i class="bi bi-person-plus me-2"></i>
+            {{ isEdit ? 'Editar Usuário' : 'Novo Usuário' }}
+          </h4>
+        </div>
+        <div class="card-body">
+          <!-- Loading -->
+          <div *ngIf="loading && isEdit" class="text-center py-3">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Carregando...</span>
+            </div>
+            <p class="mt-2">Carregando dados do usuário...</p>
+          </div>
+
+          <!-- Erro -->
+          <div *ngIf="error" class="alert alert-danger">
+            {{ error }}
+          </div>
+
+          <form *ngIf="!loading || !isEdit" (ngSubmit)="onSubmit()" #usuarioForm="ngForm">
+            <div class="row">
+              <!-- Dados Básicos -->
+              <div class="col-md-6">
+                <h5 class="border-bottom pb-2 mb-3">Dados Pessoais</h5>
+                
+                <div class="mb-3">
+                  <label class="form-label">Nome Completo *</label>
+                  <input type="text" class="form-control" 
+                         [(ngModel)]="usuario.nome" name="nome" required>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Primeiro Nome *</label>
+                    <input type="text" class="form-control" 
+                           [(ngModel)]="usuario.primeiroNome" name="primeiroNome" required>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Sobrenome *</label>
+                    <input type="text" class="form-control" 
+                           [(ngModel)]="usuario.sobrenome" name="sobrenome" required>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Data de Nascimento *</label>
+                  <input type="date" class="form-control" 
+                         [(ngModel)]="usuario.dataNascimento" name="dataNascimento" required>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Sexo</label>
+                  <select class="form-select" [(ngModel)]="usuario.sexo" name="sexo">
+                    <option value="">Selecione</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Feminino</option>
+                    <option value="O">Outro</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Dados de Acesso -->
+              <div class="col-md-6">
+                <h5 class="border-bottom pb-2 mb-3">Dados de Acesso</h5>
+                
+                <div class="mb-3">
+                  <label class="form-label">Username *</label>
+                  <input type="text" class="form-control" 
+                         [(ngModel)]="usuario.userName" name="userName" required>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Email *</label>
+                  <input type="email" class="form-control" 
+                         [(ngModel)]="usuario.email" name="email" required>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">CPF *</label>
+                  <input type="text" class="form-control" 
+                         [(ngModel)]="usuario.cpf" name="cpf" 
+                         (input)="formatarCpf($event)" 
+                         maxlength="14" required>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">RG</label>
+                  <input type="text" class="form-control" 
+                         [(ngModel)]="usuario.rg" name="rg">
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Senha {{ isEdit ? '(deixe em branco para manter atual)' : '*' }}</label>
+                  <input type="password" class="form-control" 
+                         [(ngModel)]="usuario.senha" name="senha"
+                         [required]="!isEdit">
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Perfil *</label>
+                  <select class="form-select" [(ngModel)]="usuario.role" name="role" required>
+                    <option *ngFor="let role of roles" [value]="role.value">
+                      {{ role.label }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="form-check form-switch mb-3">
+                  <input class="form-check-input" type="checkbox" 
+                         [(ngModel)]="usuario.ativo" name="ativo" id="ativo">
+                  <label class="form-check-label" for="ativo">Usuário Ativo</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Endereço -->
+            <h5 class="border-bottom pb-2 mb-3 mt-4">Endereço</h5>
+            <div class="row">
+              <div class="col-md-8 mb-3">
+                <label class="form-label">Rua</label>
+                <input type="text" class="form-control" 
+                       [(ngModel)]="usuario.rua" name="rua">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Bairro</label>
+                <input type="text" class="form-control" 
+                       [(ngModel)]="usuario.bairro" name="bairro">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Cidade</label>
+                <input type="text" class="form-control" 
+                       [(ngModel)]="usuario.cidade" name="cidade">
+              </div>
+              <div class="col-md-3 mb-3">
+                <label class="form-label">UF</label>
+                <select class="form-select" [(ngModel)]="usuario.uf" name="uf">
+                  <option value="">Selecione</option>
+                  <option *ngFor="let uf of ufs" [value]="uf">{{ uf }}</option>
+                </select>
+              </div>
+              <div class="col-md-3 mb-3">
+                <label class="form-label">CEP</label>
+                <input type="text" class="form-control" 
+                       [(ngModel)]="usuario.cep" name="cep"
+                       (input)="formatarCep($event)" maxlength="9">
+              </div>
+            </div>
+
+            <!-- Botões -->
+            <div class="d-flex gap-2 justify-content-end mt-4">
+              <a routerLink="/usuarios" class="btn btn-secondary">
+                <i class="bi bi-arrow-left me-1"></i>Cancelar
+              </a>
+              <button type="submit" class="btn btn-primary" [disabled]="loading">
+                <i class="bi bi-check-circle me-1"></i>
+                {{ isEdit ? 'Atualizar' : 'Criar' }} Usuário
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+// src/app/components/usuarios/usuarios.component.scss
+.avatar-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 123, 255, 0.05) !important;
+  cursor: pointer;
+}
+
+.badge {
+  font-size: 0.8rem;
+  padding: 0.4em 0.6em;
+}
+
+// Cores personalizadas para os badges de perfil
+.bg-admin {
+  background-color: #dc3545 !important;
+}
+
+.bg-gerente {
+  background-color: #ffc107 !important;
+  color: #000 !important;
+}
+
+.bg-vendedor {
+  background-color: #17a2b8 !important;
+}
+
+// Loading animation
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}

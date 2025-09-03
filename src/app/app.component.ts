@@ -44,6 +44,11 @@ import { CommonModule } from '@angular/common';
                 <i class="bi bi-truck"></i> Fornecedores
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/usuarios" routerLinkActive="active">
+                <i class="bi bi-people"></i> Usuários
+              </a>
+            </li>
           </ul>
         </div>
       </div>
