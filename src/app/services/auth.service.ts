@@ -37,9 +37,16 @@ export class AuthService {
     this.currentUserSubject.next(null);
   }
 
-  getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
+ getToken(): string | null {
+  const token = localStorage.getItem(this.tokenKey);
+  
+  // REMOVA "Bearer" se existir 
+  if (token && token.startsWith('Bearer ')) {
+    return token.substring(7); // Remove "Bearer "
   }
+  
+  return token;
+}
 
   isLoggedIn(): boolean {
     return !!this.getToken();
@@ -50,8 +57,9 @@ export class AuthService {
   }
 
   private storeToken(token: string): void {
-    localStorage.setItem(this.tokenKey, token);
-  }
+  console.log('Token recebido no login:', token);
+  localStorage.setItem(this.tokenKey, token);
+}
 
   private loadToken(): void {
     const token = this.getToken();
