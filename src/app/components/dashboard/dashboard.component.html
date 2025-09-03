@@ -1,0 +1,155 @@
+<!-- src/app/components/dashboard/dashboard.component.html -->
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <!-- Cabeçalho -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">
+          <i class="bi bi-speedometer2 me-2"></i>Dashboard
+        </h1>
+        <div class="text-muted">
+          <small>Bem-vindo, <strong>{{ userName }}</strong>!</small>
+          <br>
+          <small>{{ today | date:'dd/MM/yyyy HH:mm' }}</small>
+        </div>
+      </div>
+
+      <!-- Cards de Estatísticas -->
+      <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                    Total de Produtos
+                  </div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800">
+                    {{ stats.totalProdutos }}
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <i class="bi bi-boxes fs-1 text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                    Projetos Ativos
+                  </div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800">
+                    {{ stats.totalProjetos }}
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <i class="bi bi-folder fs-1 text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                    Estoque Baixo
+                  </div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800">
+                    {{ stats.estoqueBaixo }}
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <i class="bi bi-exclamation-triangle fs-1 text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                    Novos Pedidos
+                  </div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800">
+                    {{ stats.novosPedidos }}
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <i class="bi bi-cart fs-1 text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ações Rápidas -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="card shadow">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Ações Rápidas</h6>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-3 mb-3">
+                  <a routerLink="/produtos" class="btn btn-primary w-100">
+                    <i class="bi bi-plus-circle me-2"></i>Novo Produto
+                  </a>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <a routerLink="/projetos" class="btn btn-success w-100">
+                    <i class="bi bi-folder-plus me-2"></i>Novo Projeto
+                  </a>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <a routerLink="/estoque" class="btn btn-warning w-100">
+                    <i class="bi bi-clipboard-data me-2"></i>Ver Estoque
+                  </a>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <a routerLink="/fornecedores" class="btn btn-info w-100">
+                    <i class="bi bi-truck me-2"></i>Fornecedores
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mensagem de Boas-vindas -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card shadow">
+            <div class="card-body text-center py-5">
+              <i class="bi bi-house-gear fs-1 text-primary mb-3"></i>
+              <h3>Bem-vindo ao Sistema MEC Marcenaria</h3>
+              <p class="text-muted">Sistema de gerenciamento de produtos, estoque e projetos</p>
+              <div class="mt-4">
+                <span class="badge bg-primary me-2">Angular 20</span>
+                <span class="badge bg-success me-2">.NET 8</span>
+                <span class="badge bg-warning me-2">Bootstrap</span>
+                <span class="badge bg-info">JWT Auth</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
