@@ -1,0 +1,39 @@
+// src/app/components/fornecedor-form/fornecedor-form.component.scss
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.card {
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+}
+
+.card-header {
+  border-bottom: 1px solid #e3e6f0;
+  background-color: #f8f9fc !important;
+}
+
+h5 {
+  color: #5a5c69;
+  font-weight: 600;
+}
+
+.btn {
+  border-radius: 0.35rem;
+  font-weight: 500;
+}
+
+// Estilo para campos obrigatórios
+.required-field::after {
+  content: " *";
+  color: #e74a3b;
+}
+
+// Loading customizado
+.spinner-border {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-width: 0.2em;
+}

@@ -1,0 +1,170 @@
+<!-- src/app/components/fornecedor-form/fornecedor-form.component.html -->
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card shadow">
+        <div class="card-header bg-white">
+          <h4 class="mb-0">
+            <i class="bi bi-truck me-2"></i>
+            {{ isEdit ? 'Editar Fornecedor' : 'Novo Fornecedor' }}
+          </h4>
+        </div>
+        <div class="card-body">
+          <!-- Loading -->
+          <div *ngIf="loading && isEdit" class="text-center py-3">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Carregando...</span>
+            </div>
+            <p class="mt-2">Carregando dados do fornecedor...</p>
+          </div>
+
+          <!-- Erro -->
+          <div *ngIf="error" class="alert alert-danger">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            {{ error }}
+          </div>
+
+          <form *ngIf="!loading || !isEdit" (ngSubmit)="onSubmit()" #fornecedorForm="ngForm">
+            
+            <!-- Dados Principais -->
+            <h5 class="border-bottom pb-2 mb-3">Dados do Fornecedor</h5>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Nome *</label>
+                <input type="text" class="form-control" 
+                       [(ngModel)]="fornecedor.nome" name="nome" required>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Nome Fantasia</label>
+                <input type="text" class="form-control" 
+                       [(ngModel)]="fornecedor.nomeFantasia" name="nomeFantasia">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">CNPJ *</label>
+                <input type="text" class="form-control" 
+                       [(ngModel)]="fornecedor.cnpj" name="cnpj"
+                       (input)="formatarCNPJ($event)" 
+                       maxlength="18" required>
+                <small class="form-text text-muted">Formato: 00.000.000/0000-00</small>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Inscrição Estadual</label>
+                <input type="text" class="form-control" 
+                       [(ngModel)]="fornecedor.inscricaoEstadual" name="inscricaoEstadual">
+              </div>
+            </div>
+
+            <!-- Contato -->
+            <h5 class="border-bottom pb-2 mb-3 mt-4">Contato</h5>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" 
+                       [(ngModel)]="fornecedor.email" name="email">
+              </div>
+              
+              <div class="col-md-3 mb-3">
+                <label class="form-label">Telefone</label>
+                <input type="text" class="form-control" 
+                       [(ngModel)]="fornecedor.telefone" name="telefone"
+                       (input)="formatarTelefone($event)" 
+                       maxlength="15">
+              </div>
+              
+              <div class="col-md-3 mb-3">
+                <label class="form-label">Celular</label>
+                <input type="text" class="form-control" 
+                       [(ngModel)]="fornecedor.celular" name="celular"
+                       (input)="formatarTelefone($event)" 
+                       maxlength="15">
+              </div>
+            </div>
+
+            <!-- Endereço -->
+            <h5 class="border-bottom pb-2 mb-3 mt-4">Endereço</h5>
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <label class="form-label">CEP</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" 
+                         [(ngModel)]="fornecedor.cep" name="cep"
+                         (input)="formatarCEP($event)"
+                         (blur)="buscarCEP()"
+                         maxlength="9">
+                  <button type="button" class="btn btn-outline-secondary" (click)="buscarCEP()">
+                    <i class="bi bi-search"></i>
+                  </button>
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Endereço</label>
+                <input type="text" class="form-control" 
+                       [(ngModel)]="fornecedor.endereco" name="endereco">
+              </div>
+              
+              <div class="col-md-3 mb-3">
+                <label class="form-label">Número</label>
+                <input type="text" class="form-control" 
+                       [(ngModel)]="fornecedor.numero" name="numero">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Complemento</label>
+                <input type="text" class="form-control" 
+                       [(ngModel)]="fornecedor.complemento" name="complemento">
+              </div>
+              
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Bairro</label>
+                <input type="text" class="form-control" 
+                       [(ngModel)]="fornecedor.bairro" name="bairro">
+              </div>
+              
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Cidade</label>
+                <input type="text" class="form-control" 
+                       [(ngModel)]="fornecedor.cidade" name="cidade">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Estado</label>
+                <select class="form-select" [(ngModel)]="fornecedor.estado" name="estado">
+                  <option value="">Selecione</option>
+                  <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Observações -->
+            <div class="mb-3">
+              <label class="form-label">Observações</label>
+              <textarea class="form-control" rows="3"
+                        [(ngModel)]="fornecedor.observacoes" name="observacoes"></textarea>
+            </div>
+
+            <!-- Botões -->
+            <div class="d-flex gap-2 justify-content-end mt-4">
+              <a routerLink="/fornecedores" class="btn btn-secondary">
+                <i class="bi bi-arrow-left me-1"></i>Cancelar
+              </a>
+              <button type="submit" class="btn btn-primary" [disabled]="loading">
+                <i class="bi bi-check-circle me-1"></i>
+                {{ isEdit ? 'Atualizar' : 'Cadastrar' }} Fornecedor
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

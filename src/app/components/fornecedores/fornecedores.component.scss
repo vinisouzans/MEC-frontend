@@ -1,0 +1,30 @@
+// src/app/components/fornecedores/fornecedores.component.scss
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 123, 255, 0.05) !important;
+  cursor: pointer;
+}
+
+.badge {
+  font-size: 0.8rem;
+  padding: 0.4em 0.6em;
+}
+
+// Loading animation
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+// Avatar para fornecedores
+.avatar-fornecedor {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background-color: #6c757d;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
