@@ -42,3 +42,4 @@ testem.log
 Thumbs.db
 .vs/
 .vs/slnx.sqlite
+/.vs/slnx.sqlite
