@@ -46,7 +46,7 @@ import { AuthService } from './services/auth.service';
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" routerLink="/fornecedores" routerLinkActive="active">
+              <a class="nav-link" href="/fornecedores" routerLinkActive="active">
                 <i class="bi bi-truck"></i> Fornecedores
               </a>
             </li>
