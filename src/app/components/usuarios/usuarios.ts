@@ -8,7 +8,7 @@ import { Usuario } from '../../models/usuario.model';
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [CommonModule, RouterModule, UpperCasePipe], // ← IMPORTANTE: Adicione os imports
+  imports: [CommonModule, RouterModule],
   templateUrl: './usuarios.component.html', // ← Certifique-se que é .component.html
   styleUrls: ['./usuarios.component.scss']
 })
