@@ -19,8 +19,7 @@
 
   <!-- Erro -->
   <div *ngIf="error && !loading" class="alert alert-danger">
-    <i class="bi bi-exclamation-triangle me-2"></i>
-    {{ error }}
+    <i class="bi bi-exclamation-triangle me-2"></i>    
     <button (click)="carregarUsuarios()" class="btn btn-sm btn-outline-danger ms-3">
       <i class="bi bi-arrow-clockwise"></i> Tentar novamente
     </button>
