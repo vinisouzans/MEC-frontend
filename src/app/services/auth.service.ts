@@ -19,23 +19,23 @@ export class AuthService {
     this.loadToken();
   }
 
-  login(credentials: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials)
-      .pipe(
-        tap(response => {
-          this.storeToken(response.token);
-          this.currentUserSubject.next({
-            nome: response.nome,
-            role: response.role
-          });
-        })
-      );
-  }
+  //login(credentials: LoginRequest): Observable<LoginResponse> {
+    //return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials)
+    //  .pipe(
+    //    tap(response => {
+   //       this.storeToken(response.token);
+    //      this.currentUserSubject.next({
+     //       nome: response.nome,
+     //       role: response.role
+     //     });
+    //    })
+    //  );
+  //}
 
-  logout(): void {
-    localStorage.removeItem(this.tokenKey);
-    this.currentUserSubject.next(null);
-  }
+ // logout(): void {
+  //  localStorage.removeItem(this.tokenKey);
+  //  this.currentUserSubject.next(null);
+  //}
 
  getToken(): string | null {
   const token = localStorage.getItem(this.tokenKey);
@@ -57,9 +57,9 @@ export class AuthService {
   }
 
   private storeToken(token: string): void {
-  console.log('Token recebido no login:', token);
-  localStorage.setItem(this.tokenKey, token);
-}
+   console.log('Token recebido no login:', token);
+   localStorage.setItem(this.tokenKey, token);
+  }
 
   private loadToken(): void {
     const token = this.getToken();
@@ -76,4 +76,32 @@ export class AuthService {
       }
     }
   }
+  private loggedInSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
+
+// Método para observar estado de login
+isUserLoggedIn(): Observable<boolean> {
+  return this.loggedInSubject.asObservable();
+}
+
+// Atualize logout para emitir o evento:
+logout(): void {
+  localStorage.removeItem(this.tokenKey);
+  this.currentUserSubject.next(null);
+  this.loggedInSubject.next(false); // ← Emitir mudança
+}
+
+// Atualize login para emitir o evento:
+login(credentials: LoginRequest): Observable<LoginResponse> {
+  return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials)
+    .pipe(
+      tap(response => {
+        this.storeToken(response.token);
+        this.currentUserSubject.next({
+          nome: response.nome,
+          role: response.role
+        });
+        this.loggedInSubject.next(true); // ← Emitir mudança
+      })
+    );
+}
 }
